@@ -344,33 +344,40 @@ GOOD LUCK 😀
 // danny2.introduce();
 
 class Account {
+  locale = navigator.language;
+
+  /////////////
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this._pin = pin;
-    this._movements = [];
-    this.locale = navigator.language;
+    this.#pin = pin;
+    // this.#movements = [];
+    //this.locale = navigator.language;
 
     console.log(`thanks for opening and account , ${owner}`);
   }
 
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
   deposit(val) {
-    this._movements.push(val);
+    this.#movements.push(val);
   }
   withdraw(val) {
     this.deposit(-val);
   }
-  _approveloan(val) {
-    return true;
-  }
+
   requestloan(val) {
-    if (this._approveloan(val)) {
+    if (this.#approveloan(val)) {
       this.deposit(val);
       console.log(`loan approved`);
     }
+  }
+  #approveloan(val) {
+    return true;
   }
 }
 
@@ -382,6 +389,6 @@ const acc1 = new Account('hugo', 'EUR', 1111);
 acc1.deposit(250);
 acc1.withdraw(140);
 console.log(acc1);
-console.log(acc1.getMovements());
+// console.log(acc1.getMovements());
 acc1.requestloan(1000);
-console.log(acc1.pin);
+// console.log(acc1.pin);
