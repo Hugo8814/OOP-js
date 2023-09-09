@@ -379,6 +379,9 @@ class Account {
   #approveloan(val) {
     return true;
   }
+  static helper() {
+    console.log();
+  }
 }
 
 const acc1 = new Account('hugo', 'EUR', 1111);
@@ -391,4 +394,65 @@ acc1.withdraw(140);
 console.log(acc1);
 // console.log(acc1.getMovements());
 acc1.requestloan(1000);
-// console.log(acc1.pin);
+// console.log(acc1.pin);#
+
+// 1. Re-create challenge #3, but this time using ES6 classes: create an 'EVCl' child class of the 'CarCl' class
+// 2. Make the 'charge' property private;
+// 3. Implement the ability to chain the 'accelerate' and 'chargeBattery' methods of this class, and also update the 'brake' method in the 'CarCl' class. They experiment with chining!
+
+// DATA CAR 1: 'Rivian' going at 120 km/h, with a charge of 23%
+
+// const Car = function (make, speed) {
+//   this.make = make;
+//   this.speed = speed;
+// };
+
+class carCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+  }
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+    return this;
+  }
+
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+
+class EVCl extends carCl {
+  constructor(make, speed, charge) {
+    super(this, make, speed);
+    this.charge = charge;
+  }
+  EchargeBattery(chargeTo) {
+    this.charge = chargeTo;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.charge--;
+    console.log(
+      `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}`
+    );
+  }
+}
+
+const tesla = new EV('Tesla', 120, 23);
+tesla.chargeBattery(90);
+console.log(tesla);
+tesla.brake();
+tesla.accelerate();
+
+const rivian = new EV();
