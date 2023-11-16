@@ -209,3 +209,70 @@
 
 // car.speedUS = 120;
 // console.log(car);
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+Person.prototype.calcAge = function () {
+  console.log(2023 - this.birthYear);
+};
+const student = function (firstName, birthYear, course) {
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+student.prototype = Object.create(Person.prototype);
+
+student.prototype.introduce = function () {
+  console.log(`my name is ${this.firstName} and i study ${this.course}`);
+};
+const mike = new student('mike', 2003, 'CS50');
+console.log(mike);
+mike.introduce();
+mike.calcAge();
+
+student.prototype.constructor = student;
+
+/* 
+1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and current speed, the EV also has the current battery charge in % ('charge' property);
+2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism 😉
+
+DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+
+GOOD LUCK 😀
+*/
+
+const EV = function (carMake, speed, charge) {
+  this.carMake = carMake;
+  this.speed = speed;
+  this.charge = charge;
+};
+
+const car = function (carMake, speed, charge) {
+  EV.call(this, carMake, speed, charge);
+};
+
+car.prototype = Object.create(EV.prototype);
+
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+};
+
+EV.prototype.accelerate = function () {
+  this._carSpeed += 10;
+  this.charge -= 1;
+
+  console.log(
+    `Accelerated! New speed: ${this._carSpeed} km/h and charge is now ${this.charge}% `
+  );
+};
+
+const car1 = new car('Tesla', 120, 23);
+console.log(car1);
+car1.chargeBattery(40);
+console.log(car1); //why is not 40 now
+
+car.prototype.constructor = car;
