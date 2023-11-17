@@ -317,28 +317,36 @@ GOOD LUCK 😀
 // const danny = new StudentCL('joke  man', 2004, 'coding');
 // danny.introduce();
 // danny.calcAge();
-const PersonProto = {
-  calcAge() {
-    console.log(2023 - this.birthYear);
-  },
-  init(firstName, birthYear) {
-    this.firstName = firstName;
-    this.birthYear = birthYear;
-  },
-};
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2023 - this.birthYear);
+//   },
+//   init(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   },
+// };
 
-const danny = Object.create(PersonProto);
-const StudentProto = Object.create(PersonProto);
-StudentProto.init = function (firstName, birthYear, course) {
-  PersonProto.init.call(this, firstName, birthYear);
-  this.course = course;
-};
+// const danny = Object.create(PersonProto);
+// const StudentProto = Object.create(PersonProto);
+// StudentProto.init = function (firstName, birthYear, course) {
+//   PersonProto.init.call(this, firstName, birthYear);
+//   this.course = course;
+// };
 
-StudentProto.introduce = function () {
-  console.log(`hi im ${this.firstName} and im studying ${this.course}`);
-};
-const danny2 = Object.create(StudentProto);
+// StudentProto.introduce = function () {
+//   console.log(`hi im ${this.firstName} and im studying ${this.course}`);
+// };
+// const danny2 = Object.create(StudentProto);
 
-danny2.init('danny deez', 2004, 'cs50');
-danny2.calcAge();
-danny2.introduce();
+// danny2.init('danny deez', 2004, 'cs50');
+// danny2.calcAge();
+// danny2.introduce();
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+  }
+}
