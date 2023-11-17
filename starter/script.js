@@ -245,34 +245,100 @@ DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
 GOOD LUCK 😀
 */
 
-const EV = function (carMake, speed, charge) {
-  this.carMake = carMake;
-  this.speed = speed;
-  this.charge = charge;
+// const EV = function (carMake, speed, charge) {
+//   this.carMake = carMake;
+//   this.speed = speed;
+//   this.charge = charge;
+// };
+
+// const car = function (carMake, speed, charge) {
+//   EV.call(this, carMake, speed, charge);
+// };
+
+// car.prototype = Object.create(EV.prototype);
+
+// EV.prototype.chargeBattery = function (chargeTo) {
+//   this.charge = chargeTo;
+// };
+
+// EV.prototype.accelerate = function () {
+//   this._carSpeed += 10;
+//   this.charge -= 1;
+
+//   console.log(
+//     `Accelerated! New speed: ${this._carSpeed} km/h and charge is now ${this.charge}% `
+//   );
+// };
+
+// const car1 = new car('Tesla', 120, 23);
+// console.log(car1);
+// car1.chargeBattery(40);
+// console.log(car1); //why is not 40 now
+
+// car.prototype.constructor = car;
+// const Personcl = class {
+//   constructor(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   }
+//   calcAge() {
+//     console.log(2023 - this.birthYear);
+//   }
+//   greet() {
+//     console.log(`hey ${this.firstName}`);
+//   }
+//   get age() {
+//     return 2023 - this.birthYear;
+//   }
+
+//   static hey() {
+//     console.log('hey2');
+//     console.log(this);
+//   }
+// };
+
+// class StudentCL extends Personcl {
+//   constructor(fullName, birthYear, course) {
+//     //always needs to happen first!
+//     super(fullName, birthYear);
+//     this.course = course;
+//   }
+//   introduce() {
+//     console.log(`my name is ${this.firstName} and i studying ${this.course}`);
+//   }
+//   calcAge() {
+//     console.log(
+//       `I'm ${
+//         2023 - this.birthYear
+//       } years old, and im a waste man who still works at mcdeez`
+//     );
+//   }
+// }
+// const danny = new StudentCL('joke  man', 2004, 'coding');
+// danny.introduce();
+// danny.calcAge();
+const PersonProto = {
+  calcAge() {
+    console.log(2023 - this.birthYear);
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
 };
 
-const car = function (carMake, speed, charge) {
-  EV.call(this, carMake, speed, charge);
+const danny = Object.create(PersonProto);
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
 };
 
-car.prototype = Object.create(EV.prototype);
-
-EV.prototype.chargeBattery = function (chargeTo) {
-  this.charge = chargeTo;
+StudentProto.introduce = function () {
+  console.log(`hi im ${this.firstName} and im studying ${this.course}`);
 };
+const danny2 = Object.create(StudentProto);
 
-EV.prototype.accelerate = function () {
-  this._carSpeed += 10;
-  this.charge -= 1;
-
-  console.log(
-    `Accelerated! New speed: ${this._carSpeed} km/h and charge is now ${this.charge}% `
-  );
-};
-
-const car1 = new car('Tesla', 120, 23);
-console.log(car1);
-car1.chargeBattery(40);
-console.log(car1); //why is not 40 now
-
-car.prototype.constructor = car;
+danny2.init('danny deez', 2004, 'cs50');
+danny2.calcAge();
+danny2.introduce();
