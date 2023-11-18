@@ -347,6 +347,41 @@ class Account {
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
+    this._pin = pin;
+    this._movements = [];
+    this.locale = navigator.language;
+
+    console.log(`thanks for opening and account , ${owner}`);
+  }
+
+  getMovements() {
+    return this._movements;
+  }
+  deposit(val) {
+    this._movements.push(val);
+  }
+  withdraw(val) {
+    this.deposit(-val);
+  }
+  _approveloan(val) {
+    return true;
+  }
+  requestloan(val) {
+    if (this._approveloan(val)) {
+      this.deposit(val);
+      console.log(`loan approved`);
+    }
   }
 }
+
+const acc1 = new Account('hugo', 'EUR', 1111);
+
+// cac1.movements.push(250);
+// acc1.movements.push(-150);
+
+acc1.deposit(250);
+acc1.withdraw(140);
+console.log(acc1);
+console.log(acc1.getMovements());
+acc1.requestloan(1000);
+console.log(acc1.pin);
